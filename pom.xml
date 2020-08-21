@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.phellipe</groupId>
-    <artifactId>departaments</artifactId>
+    <artifactId>departments</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>departaments</name>
-    <description>This Project is a CRUD from register Departaments</description>
+    <name>departments</name>
+    <description>This Project is a CRUD from register Departments</description>
 
     <properties>
         <java.version>11</java.version>
