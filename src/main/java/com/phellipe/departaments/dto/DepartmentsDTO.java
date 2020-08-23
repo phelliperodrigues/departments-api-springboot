@@ -10,6 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 public class DepartmentsDTO {
 
+    private Long id;
     private String  name;
     private String  region;
     private String  city;
