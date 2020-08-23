@@ -1,17 +1,28 @@
 package com.phellipe.departaments.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.phellipe.departaments.dto.DepartmentsDTO;
+import com.phellipe.departaments.model.Department;
+import com.phellipe.departaments.model.enums.BoardDirector;
 import com.phellipe.departaments.service.DepartmentsService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.BDDMockito;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
@@ -30,10 +41,38 @@ public class DepartmentsControllerTest {
     ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    @DisplayName("[CREATE] - Should create a valid departments")
+    @DisplayName("[CREATE] - Should success create a departments")
     public void createValid() throws Exception {
 
+        DepartmentsDTO dto = createValidDepartments();
+        Department saved = Department.builder()
+                .id(10L)
+                .name("Dtp 1")
+                .region("Center")
+                .city("Sao Paulo")
+                .state("SP")
+                .boardDirector(BoardDirector.BUSINESS)
+                .build();
+        BDDMockito.given(service.save(Mockito.any(Department.class))).willReturn(saved);
+
+        String json = new ObjectMapper().writeValueAsString(dto);
+        MockHttpServletRequestBuilder request = post(DEPARTMENTS_API)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(json);
+        mvc
+                .perform(request)
+                .andExpect( status().isCreated() )
+                .andExpect( jsonPath("id").value(10L) )
+                .andExpect( jsonPath("name").value(dto.getName()) )
+                .andExpect( jsonPath("city").value(dto.getCity()) )
+                .andExpect( jsonPath("state").value(dto.getState()) )
+                .andExpect( jsonPath("region").value(dto.getRegion()) )
+                .andExpect( jsonPath("boardDirector").value(dto.getBoardDirector()) )
+
+        ;
     }
+
 
     @Test
     @DisplayName("[CREATE] - Should show exception when create a invalid departments")
@@ -118,5 +157,15 @@ public class DepartmentsControllerTest {
     @DisplayName("[DELETE] - Should return exception delete by ID nonexistent")
     public void deleteNotFound() throws Exception {
 
+    }
+
+    private DepartmentsDTO createValidDepartments() {
+        return DepartmentsDTO.builder()
+                .name("Dtp 1")
+                .region("Center")
+                .city("Sao Paulo")
+                .state("SP")
+                .boardDirector(BoardDirector.BUSINESS)
+                .build();
     }
 }

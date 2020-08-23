@@ -1,4 +1,7 @@
 package com.phellipe.departaments.service;
 
-public class DepartmentsService {
+import com.phellipe.departaments.model.Department;
+
+public interface DepartmentsService {
+    Department save(Department department);
 }
