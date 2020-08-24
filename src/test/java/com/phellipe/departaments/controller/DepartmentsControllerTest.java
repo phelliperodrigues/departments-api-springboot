@@ -353,7 +353,43 @@ public class DepartmentsControllerTest {
     @Test
     @DisplayName("[READ] - Should filter a departments with parameters")
     public void findDepartments() throws Exception {
-        assertThat(1, equalTo(0));
+        Long id = 1L;
+
+        Department department = Department.builder()
+                .id(id)
+                .name("Dtp 1")
+                .region("Center")
+                .city("Sao Paulo")
+                .state("SP")
+                .boardDirector(BoardDirector.BUSINESS)
+                .build();
+
+        given(
+                service.find(Mockito.any(Department.class),
+                Mockito.any(Pageable.class))
+        ).willReturn(
+                new PageImpl<Department>(
+                        Collections.singletonList(department),
+                        PageRequest.of(0,100),
+                        1
+                )
+        );
+
+        String queryString = String.format("?name=%s&city=%s&page=0&size=100",
+                department.getName(), department.getCity());
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(DEPARTMENTS_API.concat(queryString))
+                .accept(MediaType.APPLICATION_JSON);
+
+        mvc
+                .perform( request )
+                .andExpect( status().isOk() )
+                .andExpect( jsonPath("content", Matchers.hasSize(1)))
+                .andExpect( jsonPath("totalElements").value(1) )
+                .andExpect( jsonPath("pageable.pageSize").value(100) )
+                .andExpect( jsonPath("pageable.pageNumber").value(0))
+        ;
 
     }
 

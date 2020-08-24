@@ -1,6 +1,7 @@
 package com.phellipe.departaments.service;
 
 import com.phellipe.departaments.model.Department;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface DepartmentsService {
     List<Department> findAll();
 
     Optional<Department> getById(Long id);
+
+    Page<Department> find(Department filter, Pageable pageRequest);
 }
