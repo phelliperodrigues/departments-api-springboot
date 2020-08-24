@@ -27,6 +27,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -113,7 +114,7 @@ public class DepartmentsControllerTest {
                 .boardDirector(BoardDirector.BUSINESS)
                 .build();
 
-        Department savedUser = Department.builder()
+        Department savedDepartment = Department.builder()
                 .id(1L)
                 .region("Center")
                 .city("Sao Paulo")
@@ -121,7 +122,7 @@ public class DepartmentsControllerTest {
                 .boardDirector(BoardDirector.BUSINESS)
                 .build();
 
-        given(service.save(Mockito.any(Department.class))).willReturn(savedUser);
+        given(service.save(Mockito.any(Department.class))).willReturn(savedDepartment);
 
         String json = mapper.writeValueAsString(dto);
         MockHttpServletRequestBuilder request = post(DEPARTMENTS_API)
@@ -145,7 +146,7 @@ public class DepartmentsControllerTest {
                 .boardDirector(BoardDirector.BUSINESS)
                 .build();
 
-        Department savedUser = Department.builder()
+        Department savedDepartment = Department.builder()
                 .id(1L)
                 .name("Dpt 1")
                 .city("Sao Paulo")
@@ -153,7 +154,7 @@ public class DepartmentsControllerTest {
                 .boardDirector(BoardDirector.BUSINESS)
                 .build();
 
-        given(service.save(Mockito.any(Department.class))).willReturn(savedUser);
+        given(service.save(Mockito.any(Department.class))).willReturn(savedDepartment);
 
         String json = mapper.writeValueAsString(dto);
         MockHttpServletRequestBuilder request = post(DEPARTMENTS_API)
@@ -178,7 +179,7 @@ public class DepartmentsControllerTest {
                 .boardDirector(BoardDirector.BUSINESS)
                 .build();
 
-        Department savedUser = Department.builder()
+        Department savedDepartment = Department.builder()
                 .id(1L)
                 .name("Dpt 1")
                 .region("Center")
@@ -186,7 +187,7 @@ public class DepartmentsControllerTest {
                 .boardDirector(BoardDirector.BUSINESS)
                 .build();
 
-        given(service.save(Mockito.any(Department.class))).willReturn(savedUser);
+        given(service.save(Mockito.any(Department.class))).willReturn(savedDepartment);
 
         String json = mapper.writeValueAsString(dto);
         MockHttpServletRequestBuilder request = post(DEPARTMENTS_API)
@@ -212,7 +213,7 @@ public class DepartmentsControllerTest {
                 .boardDirector(BoardDirector.BUSINESS)
                 .build();
 
-        Department savedUser = Department.builder()
+        Department savedDepartment = Department.builder()
                 .id(1L)
                 .name("Dpt 1")
                 .region("Center")
@@ -220,7 +221,7 @@ public class DepartmentsControllerTest {
                 .boardDirector(BoardDirector.BUSINESS)
                 .build();
 
-        given(service.save(Mockito.any(Department.class))).willReturn(savedUser);
+        given(service.save(Mockito.any(Department.class))).willReturn(savedDepartment);
 
         String json = mapper.writeValueAsString(dto);
         MockHttpServletRequestBuilder request = post(DEPARTMENTS_API)
@@ -246,7 +247,7 @@ public class DepartmentsControllerTest {
                 .state("SP")
                 .build();
 
-        Department savedUser = Department.builder()
+        Department savedDepartment = Department.builder()
                 .id(1L)
                 .name("Dpt 1")
                 .region("Center")
@@ -254,7 +255,7 @@ public class DepartmentsControllerTest {
                 .state("SP")
                 .build();
 
-        given(service.save(Mockito.any(Department.class))).willReturn(savedUser);
+        given(service.save(Mockito.any(Department.class))).willReturn(savedDepartment);
 
         String json = mapper.writeValueAsString(dto);
         MockHttpServletRequestBuilder request = post(DEPARTMENTS_API)
@@ -275,7 +276,7 @@ public class DepartmentsControllerTest {
     public void showAll() throws Exception {
         Long id = 1l;
 
-        Department book = Department.builder()
+        Department department = Department.builder()
                 .id(id)
                 .name("Dtp 1")
                 .region("Center")
@@ -284,8 +285,8 @@ public class DepartmentsControllerTest {
                 .boardDirector(BoardDirector.BUSINESS)
                 .build();
 
-        BDDMockito.given( service.findAll() )
-                .willReturn(Collections.singletonList(book));
+        given( service.findAll() )
+                .willReturn(Collections.singletonList(department));
 
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
@@ -303,7 +304,33 @@ public class DepartmentsControllerTest {
     @Test
     @DisplayName("[READ] - Should return Departments by ID")
     public void findById() throws Exception {
-        assertThat(1, equalTo(0));
+        Long id = 1L;
+
+        Department department = Department.builder()
+                .id(id)
+                .name("Dtp 1")
+                .region("Center")
+                .city("Sao Paulo")
+                .state("SP")
+                .boardDirector(BoardDirector.BUSINESS)
+                .build();
+
+        given( service.getById(id) ).willReturn(Optional.of(department));
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(DEPARTMENTS_API.concat("/" + id))
+                .accept(MediaType.APPLICATION_JSON);
+
+        mvc
+                .perform(request)
+                .andExpect(status().isOk())
+                .andExpect( jsonPath("id").value(id) )
+                .andExpect( jsonPath("name").value(createValidDepartments().getName()) )
+                .andExpect( jsonPath("region").value(createValidDepartments().getRegion()) )
+                .andExpect( jsonPath("city").value(createValidDepartments().getCity()) )
+                .andExpect( jsonPath("state").value(createValidDepartments().getState()) )
+                .andExpect( jsonPath("boardDirector").value(createValidDepartments().getBoardDirector()) )
+        ;
 
     }
 

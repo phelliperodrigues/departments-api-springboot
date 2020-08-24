@@ -6,6 +6,7 @@ import com.phellipe.departaments.service.DepartmentsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DepartmentsServiceImp implements DepartmentsService {
@@ -24,5 +25,10 @@ public class DepartmentsServiceImp implements DepartmentsService {
     @Override
     public List<Department> findAll() {
         return null;
+    }
+
+    @Override
+    public Optional<Department> getById(Long id) {
+        return Optional.empty();
     }
 }
