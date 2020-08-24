@@ -46,8 +46,11 @@ public class DepartmentsController {
     @GetMapping
     @ApiOperation("Find All Departments")
     public List<DepartmentsDTO> findAll() {
-
-        return null;
+        List<Department> result = service.findAll();
+        return result
+                .stream()
+                .map(entity -> mapper.map(entity, DepartmentsDTO.class))
+                .collect(Collectors.toList());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

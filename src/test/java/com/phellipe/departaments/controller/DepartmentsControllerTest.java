@@ -295,8 +295,7 @@ public class DepartmentsControllerTest {
         mvc
                 .perform( request )
                 .andExpect( status().isOk() )
-                .andExpect( jsonPath("content", Matchers.hasSize(1)))
-                .andExpect( jsonPath("totalElements").value(1) )
+                .andExpect( jsonPath("$", Matchers.hasSize(1)))
         ;
 
     }
