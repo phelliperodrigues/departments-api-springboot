@@ -104,7 +104,7 @@ public class DepartmentsServiceTest {
         assertThat(savedDepartment.getId()).isNotNull();
         assertThat(savedDepartment.getName()).isEqualTo("Dtp 1");
         assertThat(savedDepartment.getCity()).isEqualTo("Sao Paulo");
-        assertThat(savedDepartment.getRegion()).isEqualTo("Dtp 1");
+        assertThat(savedDepartment.getRegion()).isEqualTo("Center");
         assertThat(savedDepartment.getState()).isEqualTo("SP");
         assertThat(savedDepartment.getBoardDirector()).isNotNull();
     }
