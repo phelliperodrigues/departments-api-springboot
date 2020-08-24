@@ -21,6 +21,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -58,8 +62,8 @@ public class DepartmentsControllerTest {
         String json = new ObjectMapper().writeValueAsString(dto);
         MockHttpServletRequestBuilder request =
                 post(DEPARTMENTS_API)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
                 .content(json);
         mvc
                 .perform(request)
@@ -78,72 +82,91 @@ public class DepartmentsControllerTest {
     @Test
     @DisplayName("[CREATE] - Should show exception when create a invalid departments")
     public void showExceptionWhenCreateInvalid() throws Exception {
+        String json = mapper.writeValueAsString(new DepartmentsDTO());
 
+        MockHttpServletRequestBuilder request = post(DEPARTMENTS_API)
+                .contentType(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .content(json);
+
+        mvc.perform(request)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("errors", hasSize(5)));
     }
 
     @Test
     @DisplayName("[CREATE] - Should show message exceptions that name required")
     public void createInvalidDepartmentsWithoutNameTest() throws Exception {
-
+        assertThat(1, equalTo(0));
     }
 
     @Test
     @DisplayName("[CREATE] - Should show message exceptions that region required")
     public void createInvalidDepartmentsWithoutRegionTest() throws Exception {
+        assertThat(1, equalTo(0));
 
     }
 
     @Test
     @DisplayName("[CREATE] - Should show message exceptions that city required")
     public void createInvalidDepartmentsWithoutCityTest() throws Exception {
+        assertThat(1, equalTo(0));
 
     }
 
     @Test
     @DisplayName("[CREATE] - Should show message exceptions that state required")
     public void createInvalidDepartmentsWithoutStateTest() throws Exception {
+        assertThat(1, equalTo(0));
 
     }
 
     @Test
     @DisplayName("[CREATE] - Should show message exceptions that board directors required")
     public void createInvalidDepartmentsWithoutBoardDirectorsTest() throws Exception {
+        assertThat(1, equalTo(0));
 
     }
 
     @Test
     @DisplayName("[READ] - Should return all Departments")
     public void showAll() throws Exception {
+        assertThat(1, equalTo(0));
 
     }
 
     @Test
     @DisplayName("[READ] - Should return Departments by ID")
     public void findById() throws Exception {
+        assertThat(1, equalTo(0));
 
     }
 
     @Test
     @DisplayName("[READ] - Should return 404 Not Found find by ID")
     public void findByIdNotFound() throws Exception {
+        assertThat(1, equalTo(0));
 
     }
 
     @Test
     @DisplayName("[READ] - Should filter a departments with parameters")
     public void findDepartments() throws Exception {
+        assertThat(1, equalTo(0));
 
     }
 
     @Test
     @DisplayName("[UPDATE] - Should update Departments by ID")
     public void update() throws Exception {
+        assertThat(1, equalTo(0));
 
     }
 
     @Test
     @DisplayName("[UPDATE] - Should return 404 Not Found update by ID")
     public void updateNotFound() throws Exception {
+        assertThat(1, equalTo(0));
 
     }
 
@@ -151,12 +174,14 @@ public class DepartmentsControllerTest {
     @Test
     @DisplayName("[DELETE] - Should delete Departments by ID")
     public void delete() throws Exception {
+        assertThat(1, equalTo(0));
 
     }
 
     @Test
     @DisplayName("[DELETE] - Should return exception delete by ID nonexistent")
     public void deleteNotFound() throws Exception {
+        assertThat(1, equalTo(0));
 
     }
 
