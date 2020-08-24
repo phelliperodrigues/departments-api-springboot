@@ -337,7 +337,16 @@ public class DepartmentsControllerTest {
     @Test
     @DisplayName("[READ] - Should return 404 Not Found find by ID")
     public void findByIdNotFound() throws Exception {
-        assertThat(1, equalTo(0));
+
+        given( service.getById(Mockito.anyLong()) ).willReturn( Optional.empty() );
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(DEPARTMENTS_API.concat("/" + 1))
+                .accept(MediaType.APPLICATION_JSON);
+
+        mvc
+            .perform(request)
+            .andExpect(status().isNotFound());
 
     }
 
