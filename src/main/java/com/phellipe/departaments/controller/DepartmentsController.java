@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/departments")
@@ -36,13 +38,16 @@ public class DepartmentsController {
     @ApiOperation("Create a Department")
     public DepartmentsDTO create(@Valid @RequestBody DepartmentsDTO dto){
         log.info(" creating a department: {} ", dto.getName());
-        log.info(" creating a department: {} ", dto.getBoardDirector());
-        log.info(" creating a department: {} ", dto.getCity());
-        log.info(" creating a department: {} ", dto.getState());
-
         Department entity = mapper.map( dto, Department.class );
         entity = service.save(entity);
         return mapper.map(entity, DepartmentsDTO.class);
+    }
+
+    @GetMapping
+    @ApiOperation("Find All Departments")
+    public List<DepartmentsDTO> findAll() {
+
+        return null;
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -52,9 +57,4 @@ public class DepartmentsController {
         return new ApiExceptions(bindingResult);
     }
 
-    @ExceptionHandler(BusinessException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiExceptions handleBusinessException(BusinessException ex){
-        return new ApiExceptions(ex);
-    }
-}
+   }

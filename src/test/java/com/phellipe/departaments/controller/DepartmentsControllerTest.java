@@ -5,6 +5,7 @@ import com.phellipe.departaments.dto.DepartmentsDTO;
 import com.phellipe.departaments.model.Department;
 import com.phellipe.departaments.model.enums.BoardDirector;
 import com.phellipe.departaments.service.DepartmentsService;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -21,9 +25,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -57,7 +65,7 @@ public class DepartmentsControllerTest {
                 .state("SP")
                 .boardDirector(BoardDirector.BUSINESS)
                 .build();
-        BDDMockito.given(service.save(Mockito.any(Department.class))).willReturn(saved);
+        given(service.save(Mockito.any(Department.class))).willReturn(saved);
 
         String json = new ObjectMapper().writeValueAsString(dto);
         MockHttpServletRequestBuilder request =
@@ -97,41 +105,199 @@ public class DepartmentsControllerTest {
     @Test
     @DisplayName("[CREATE] - Should show message exceptions that name required")
     public void createInvalidDepartmentsWithoutNameTest() throws Exception {
-        assertThat(1, equalTo(0));
+
+        DepartmentsDTO dto =  DepartmentsDTO.builder()
+                .region("Center")
+                .city("Sao Paulo")
+                .state("SP")
+                .boardDirector(BoardDirector.BUSINESS)
+                .build();
+
+        Department savedUser = Department.builder()
+                .id(1L)
+                .region("Center")
+                .city("Sao Paulo")
+                .state("SP")
+                .boardDirector(BoardDirector.BUSINESS)
+                .build();
+
+        given(service.save(Mockito.any(Department.class))).willReturn(savedUser);
+
+        String json = mapper.writeValueAsString(dto);
+        MockHttpServletRequestBuilder request = post(DEPARTMENTS_API)
+                .contentType(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .content(json);
+
+        mvc.perform(request)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("errors", hasSize(1)))
+                .andExpect(jsonPath("errors[0]").value("Name is required"));
     }
 
     @Test
     @DisplayName("[CREATE] - Should show message exceptions that region required")
     public void createInvalidDepartmentsWithoutRegionTest() throws Exception {
-        assertThat(1, equalTo(0));
+        DepartmentsDTO dto =  DepartmentsDTO.builder()
+                .name("Dpt 1")
+                .city("Sao Paulo")
+                .state("SP")
+                .boardDirector(BoardDirector.BUSINESS)
+                .build();
+
+        Department savedUser = Department.builder()
+                .id(1L)
+                .name("Dpt 1")
+                .city("Sao Paulo")
+                .state("SP")
+                .boardDirector(BoardDirector.BUSINESS)
+                .build();
+
+        given(service.save(Mockito.any(Department.class))).willReturn(savedUser);
+
+        String json = mapper.writeValueAsString(dto);
+        MockHttpServletRequestBuilder request = post(DEPARTMENTS_API)
+                .contentType(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .content(json);
+
+        mvc.perform(request)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("errors", hasSize(1)))
+                .andExpect(jsonPath("errors[0]").value("Region is required"));
 
     }
 
     @Test
     @DisplayName("[CREATE] - Should show message exceptions that city required")
     public void createInvalidDepartmentsWithoutCityTest() throws Exception {
-        assertThat(1, equalTo(0));
+        DepartmentsDTO dto =  DepartmentsDTO.builder()
+                .name("Dpt 1")
+                .region("Center")
+                .state("SP")
+                .boardDirector(BoardDirector.BUSINESS)
+                .build();
+
+        Department savedUser = Department.builder()
+                .id(1L)
+                .name("Dpt 1")
+                .region("Center")
+                .state("SP")
+                .boardDirector(BoardDirector.BUSINESS)
+                .build();
+
+        given(service.save(Mockito.any(Department.class))).willReturn(savedUser);
+
+        String json = mapper.writeValueAsString(dto);
+        MockHttpServletRequestBuilder request = post(DEPARTMENTS_API)
+                .contentType(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .content(json);
+
+        mvc.perform(request)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("errors", hasSize(1)))
+                .andExpect(jsonPath("errors[0]").value("City is required"));
+
 
     }
 
     @Test
     @DisplayName("[CREATE] - Should show message exceptions that state required")
     public void createInvalidDepartmentsWithoutStateTest() throws Exception {
-        assertThat(1, equalTo(0));
+        DepartmentsDTO dto =  DepartmentsDTO.builder()
+                .name("Dpt 1")
+                .region("Center")
+                .city("Sao Paulo")
+                .boardDirector(BoardDirector.BUSINESS)
+                .build();
+
+        Department savedUser = Department.builder()
+                .id(1L)
+                .name("Dpt 1")
+                .region("Center")
+                .city("Sao Paulo")
+                .boardDirector(BoardDirector.BUSINESS)
+                .build();
+
+        given(service.save(Mockito.any(Department.class))).willReturn(savedUser);
+
+        String json = mapper.writeValueAsString(dto);
+        MockHttpServletRequestBuilder request = post(DEPARTMENTS_API)
+                .contentType(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .content(json);
+
+        mvc.perform(request)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("errors", hasSize(1)))
+                .andExpect(jsonPath("errors[0]").value("State is required"));
+
 
     }
 
     @Test
     @DisplayName("[CREATE] - Should show message exceptions that board directors required")
     public void createInvalidDepartmentsWithoutBoardDirectorsTest() throws Exception {
-        assertThat(1, equalTo(0));
+        DepartmentsDTO dto =  DepartmentsDTO.builder()
+                .name("Dpt 1")
+                .region("Center")
+                .city("Sao Paulo")
+                .state("SP")
+                .build();
+
+        Department savedUser = Department.builder()
+                .id(1L)
+                .name("Dpt 1")
+                .region("Center")
+                .city("Sao Paulo")
+                .state("SP")
+                .build();
+
+        given(service.save(Mockito.any(Department.class))).willReturn(savedUser);
+
+        String json = mapper.writeValueAsString(dto);
+        MockHttpServletRequestBuilder request = post(DEPARTMENTS_API)
+                .contentType(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .content(json);
+
+        mvc.perform(request)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("errors", hasSize(1)))
+                .andExpect(jsonPath("errors[0]").value("Board directors is required"));
+
 
     }
 
     @Test
     @DisplayName("[READ] - Should return all Departments")
     public void showAll() throws Exception {
-        assertThat(1, equalTo(0));
+        Long id = 1l;
+
+        Department book = Department.builder()
+                .id(id)
+                .name("Dtp 1")
+                .region("Center")
+                .city("Sao Paulo")
+                .state("SP")
+                .boardDirector(BoardDirector.BUSINESS)
+                .build();
+
+        BDDMockito.given( service.findAll() )
+                .willReturn(Collections.singletonList(book));
+
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(DEPARTMENTS_API)
+                .accept(MediaType.APPLICATION_JSON);
+
+        mvc
+                .perform( request )
+                .andExpect( status().isOk() )
+                .andExpect( jsonPath("content", Matchers.hasSize(1)))
+                .andExpect( jsonPath("totalElements").value(1) )
+        ;
 
     }
 

@@ -5,6 +5,8 @@ import com.phellipe.departaments.repository.DepartmentsRepository;
 import com.phellipe.departaments.service.DepartmentsService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DepartmentsServiceImp implements DepartmentsService {
 
@@ -16,6 +18,11 @@ public class DepartmentsServiceImp implements DepartmentsService {
 
     @Override
     public Department save(Department department) {
+        return null;
+    }
+
+    @Override
+    public List<Department> findAll() {
         return null;
     }
 }
