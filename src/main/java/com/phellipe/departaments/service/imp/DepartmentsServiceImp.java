@@ -38,4 +38,9 @@ public class DepartmentsServiceImp implements DepartmentsService {
     public Page<Department> find(Department filter, Pageable pageRequest) {
         return null;
     }
+
+    @Override
+    public Department update(Department department) {
+        return null;
+    }
 }

@@ -15,4 +15,6 @@ public interface DepartmentsService {
     Optional<Department> getById(Long id);
 
     Page<Department> find(Department filter, Pageable pageRequest);
+
+    Department update(Department department);
 }

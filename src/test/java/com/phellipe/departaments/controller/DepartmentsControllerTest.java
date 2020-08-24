@@ -29,11 +29,14 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
+import static java.util.Optional.empty;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.ResultMatcher.matchAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -338,7 +341,7 @@ public class DepartmentsControllerTest {
     @DisplayName("[READ] - Should return 404 Not Found find by ID")
     public void findByIdNotFound() throws Exception {
 
-        given( service.getById(Mockito.anyLong()) ).willReturn( Optional.empty() );
+        given( service.getById(anyLong()) ).willReturn( empty() );
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .get(DEPARTMENTS_API.concat("/" + 1))
@@ -395,14 +398,60 @@ public class DepartmentsControllerTest {
     @Test
     @DisplayName("[UPDATE] - Should update Departments by ID")
     public void update() throws Exception {
-        assertThat(1, equalTo(0));
+        Long id = 1l;
+        String json = new ObjectMapper().writeValueAsString(createValidDepartments());
 
+        Department updatingDepartment = Department.builder()
+                .id(id)
+                .name("Dtp 1")
+                .region("Center")
+                .city("Sao Paulo")
+                .state("SP")
+                .boardDirector(BoardDirector.BUSINESS)
+                .build();
+
+        given( service.getById(id) ).willReturn( Optional.of(updatingDepartment) );
+        Department updatedDepartment =
+                Department.builder()
+                        .id(id)
+                        .name("Dtp 2")
+                        .region("South Zone")
+                        .city("Sao Paulo")
+                        .state("SP")
+                        .boardDirector(BoardDirector.BUSINESS)
+                        .build();
+        given(service.update(updatingDepartment)).willReturn(updatedDepartment);
+
+        MockHttpServletRequestBuilder request = put(DEPARTMENTS_API.concat("/" + id))
+                .content(json)
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON);
+
+        mvc.perform( request )
+                .andExpect(status().isOk())
+                .andExpect( jsonPath("id").value(id) )
+                .andExpect( jsonPath("name").value("Dtp 2") )
+                .andExpect( jsonPath("region").value("South Zone") )
+                .andExpect( jsonPath("city").value(createValidDepartments().getCity()) )
+                .andExpect( jsonPath("state").value(createValidDepartments().getState()) )
+                .andExpect( jsonPath("boardDirector").isNotEmpty() );
     }
 
     @Test
     @DisplayName("[UPDATE] - Should return 404 Not Found update by ID")
     public void updateNotFound() throws Exception {
-        assertThat(1, equalTo(0));
+
+        String json = new ObjectMapper().writeValueAsString(createValidDepartments());
+        given( service.getById(anyLong()) )
+                .willReturn( empty() );
+
+        MockHttpServletRequestBuilder request = put(DEPARTMENTS_API.concat("/" + 1))
+                .content(json)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mvc.perform( request )
+                .andExpect( status().isNotFound() );
 
     }
 

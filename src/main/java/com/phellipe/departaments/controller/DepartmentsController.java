@@ -82,7 +82,21 @@ public class DepartmentsController {
         return new PageImpl<DepartmentsDTO>( list, pageRequest, result.getTotalElements() );
     }
 
+    @PutMapping("{id}")
+    @ApiOperation("Updates a department")
+    public DepartmentsDTO update( @PathVariable Long id, @RequestBody @Valid DepartmentsDTO dto){
+        log.info(" updating department of id: {} ", id);
+        return service.getById(id).map( department -> {
+            department.setName(dto.getName());
+            department.setRegion(dto.getRegion());
+            department.setCity(dto.getCity());
+            department.setState(dto.getState());
+            department.setBoardDirector(dto.getBoardDirector());
+            department = service.update(department);
+            return mapper.map(department, DepartmentsDTO.class);
 
+        }).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND) );
+    }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiExceptions handleValidationExceptions(MethodArgumentNotValidException ex){
