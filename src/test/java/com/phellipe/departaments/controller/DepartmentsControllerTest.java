@@ -329,7 +329,7 @@ public class DepartmentsControllerTest {
                 .andExpect( jsonPath("region").value(createValidDepartments().getRegion()) )
                 .andExpect( jsonPath("city").value(createValidDepartments().getCity()) )
                 .andExpect( jsonPath("state").value(createValidDepartments().getState()) )
-                .andExpect( jsonPath("boardDirector").value(createValidDepartments().getBoardDirector()) )
+                .andExpect( jsonPath("boardDirector").isNotEmpty() )
         ;
 
     }

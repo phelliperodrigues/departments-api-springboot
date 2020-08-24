@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.nio.charset.StandardCharsets;
@@ -45,12 +46,24 @@ public class DepartmentsController {
 
     @GetMapping
     @ApiOperation("Find All Departments")
-    public List<DepartmentsDTO> findAll() {
+    public List<DepartmentsDTO> get() {
+        log.info(" obtaining all departments");
+
         List<Department> result = service.findAll();
         return result
                 .stream()
                 .map(entity -> mapper.map(entity, DepartmentsDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("{id}")
+    @ApiOperation("Get a departments details by id")
+    public DepartmentsDTO get( @PathVariable Long id ){
+        log.info(" obtaining details for departments id: {} ", id);
+        return service
+                .getById(id)
+                .map( department -> mapper.map(department, DepartmentsDTO.class)  )
+                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND) );
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
