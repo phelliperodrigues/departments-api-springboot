@@ -97,6 +97,16 @@ public class DepartmentsController {
 
         }).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND) );
     }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ApiOperation("Deletes a department by id")
+    public void delete(@PathVariable Long id){
+        log.info(" deleting department of id: {} ", id);
+        Department department = service.getById(id).orElseThrow( () ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND) );
+        service.delete(department);
+    }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiExceptions handleValidationExceptions(MethodArgumentNotValidException ex){

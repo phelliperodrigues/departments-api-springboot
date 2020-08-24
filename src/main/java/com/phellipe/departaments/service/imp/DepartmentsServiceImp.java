@@ -43,4 +43,9 @@ public class DepartmentsServiceImp implements DepartmentsService {
     public Department update(Department department) {
         return null;
     }
+
+    @Override
+    public void delete(Department department) {
+
+    }
 }

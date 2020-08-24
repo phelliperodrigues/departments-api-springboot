@@ -17,4 +17,6 @@ public interface DepartmentsService {
     Page<Department> find(Department filter, Pageable pageRequest);
 
     Department update(Department department);
+
+    void delete(Department department);
 }
