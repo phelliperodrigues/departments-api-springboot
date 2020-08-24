@@ -459,14 +459,27 @@ public class DepartmentsControllerTest {
     @Test
     @DisplayName("[DELETE] - Should delete Departments by ID")
     public void delete() throws Exception {
-        assertThat(1, equalTo(0));
+        given(service.getById(anyLong()))
+                .willReturn(Optional.of(Department.builder().id(1L).build()));
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .delete(DEPARTMENTS_API.concat("/" + 1));
+
+        mvc.perform( request )
+                .andExpect( status().isNoContent() );
 
     }
 
     @Test
     @DisplayName("[DELETE] - Should return exception delete by ID nonexistent")
     public void deleteNotFound() throws Exception {
-        assertThat(1, equalTo(0));
+        given(service.getById(anyLong())).willReturn(empty());
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .delete(DEPARTMENTS_API.concat("/" + 1));
+
+        mvc.perform( request )
+                .andExpect( status().isNotFound() );
 
     }
 
