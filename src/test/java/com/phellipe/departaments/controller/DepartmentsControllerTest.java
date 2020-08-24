@@ -290,7 +290,7 @@ public class DepartmentsControllerTest {
 
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .get(DEPARTMENTS_API)
+                .get(DEPARTMENTS_API.concat("/all"))
                 .accept(MediaType.APPLICATION_JSON);
 
         mvc
@@ -375,9 +375,8 @@ public class DepartmentsControllerTest {
                 )
         );
 
-        String queryString = String.format("?name=%s&city=%s&page=0&size=100",
-                department.getName(), department.getCity());
-
+        String queryString = String.format("?name=%s&state=%s&page=0&size=100",
+                department.getName(), department.getState());
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .get(DEPARTMENTS_API.concat(queryString))
                 .accept(MediaType.APPLICATION_JSON);

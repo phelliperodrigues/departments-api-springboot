@@ -11,6 +11,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
@@ -44,7 +47,7 @@ public class DepartmentsController {
         return mapper.map(entity, DepartmentsDTO.class);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     @ApiOperation("Find All Departments")
     public List<DepartmentsDTO> get() {
         log.info(" obtaining all departments");
@@ -65,6 +68,20 @@ public class DepartmentsController {
                 .map( department -> mapper.map(department, DepartmentsDTO.class)  )
                 .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND) );
     }
+
+    @GetMapping
+    @ApiOperation("Lists departments by params")
+    public Page<DepartmentsDTO> find( DepartmentsDTO dto, Pageable pageRequest ){
+        Department filter = mapper.map(dto, Department.class);
+        Page<Department> result = service.find(filter, pageRequest);
+        List<DepartmentsDTO> list = result.getContent()
+                .stream()
+                .map(entity -> mapper.map(entity, DepartmentsDTO.class))
+                .collect(Collectors.toList());
+
+        return new PageImpl<DepartmentsDTO>( list, pageRequest, result.getTotalElements() );
+    }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
