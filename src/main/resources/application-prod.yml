@@ -1,1 +1,22 @@
+app:
+  message: This is the properties file for the ${spring.application.name} specific to PROD Enveroment
 
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+      jadira:
+        usertype:
+          autoRegisterUserTypes: true
+  datasource:
+    platform: postgres
+    username: postgres
+    password: admin
+    url: jdbc:postgresql://postgres:5432/departments
+    driver-class-name: org.postgresql.Driver
