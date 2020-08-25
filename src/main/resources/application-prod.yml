@@ -15,8 +15,9 @@ spring:
         usertype:
           autoRegisterUserTypes: true
   datasource:
-    platform: postgres
-    username: postgres
-    password: admin
-    url: jdbc:postgresql://postgres:5432/departments
-    driver-class-name: org.postgresql.Driver
+    driverClassName: org.postgresql.Driver
+    maxActive: 10
+    maxIdle: 5
+    minIdle: 2
+    initialSize: 5
+    removeAbandoned: true
