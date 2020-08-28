@@ -22,12 +22,12 @@ public class DepartmentsApplication  extends SpringBootServletInitializer {
         SpringApplication.run(DepartmentsApplication.class, args);
     }
     
-   @Bean
+   	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
+			registry.addMapping("/**")
 					.allowedMethods("PUT", "DELETE", "GET", "HEAD", "POST");
 			}
 		};
