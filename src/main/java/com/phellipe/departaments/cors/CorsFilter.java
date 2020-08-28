@@ -15,7 +15,7 @@ import java.io.IOException;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter  implements Filter {
 
-    private String origin = "https://departments-front.herokuapp.com";
+    private String origin = "http://localhost:4200";
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -27,9 +27,10 @@ public class CorsFilter  implements Filter {
 
 
         if ("OPTIONS".equals(req.getMethod()) && origin.equals(req.getHeader("Origin"))){
-            res.setHeader("Access-Control-Max-Age", "3600");
-            res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
+            res.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, PATH, OPTIONS");
             res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+            res.setHeader("Access-Control-Max-Age", "3600");
+
             res.setStatus(HttpServletResponse.SC_OK);
         }else {
             chain.doFilter(request, response);
