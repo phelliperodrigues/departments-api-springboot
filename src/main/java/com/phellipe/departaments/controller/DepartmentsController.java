@@ -1,8 +1,5 @@
 package com.phellipe.departaments.controller;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.phellipe.departaments.controller.exception.ApiExceptions;
-import com.phellipe.departaments.controller.exception.BusinessException;
 import com.phellipe.departaments.dto.DepartmentsDTO;
 import com.phellipe.departaments.model.Department;
 import com.phellipe.departaments.service.DepartmentsService;
@@ -15,19 +12,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(allowedHeaders = "*", origins = "*" , maxAge = 3600)
+
 @RestController
 @RequestMapping("/api/departments")
 @Api("Department API")

@@ -10,14 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
-@Component
-@Order(Ordered.HIGHEST_PRECEDENCE)
-public class CorsFilter  implements Filter {
+public class CorsFilter  {//implements Filter {
 
     private String origin = "http://localhost:4200";
 
-    @Override
+//     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest)request;
@@ -28,7 +25,7 @@ public class CorsFilter  implements Filter {
 
         if ("OPTIONS".equals(req.getMethod()) && origin.equals(req.getHeader("Origin"))){
             res.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, PATH, OPTIONS");
-            res.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
+            res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
             res.setHeader("Access-Control-Max-Age", "3600");
 
             res.setStatus(HttpServletResponse.SC_OK);
@@ -39,12 +36,12 @@ public class CorsFilter  implements Filter {
     }
 
 
-    @Override
+//     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
     }
 
-    @Override
+//     @Override
     public void destroy() {
 
     }
