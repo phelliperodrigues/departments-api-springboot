@@ -27,10 +27,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = {"https://departments-front.herokuapp.com","http://localhost:4200", "http://127.0.0.1:4200" }, 
-             maxAge = 3600, 
-             allowedHeaders = {"Origin","Accept","X-Requested-With","Content-Type","Access-Control-Request-Method","Access-Control-Request-Headers","content-type"}
-            )
+@CrossOrigin(origins = {"https://departments-front.herokuapp.com",
+        "http://localhost:4200", "http://127.0.0.1:4200" }, allowedHeaders ="*")
 @RestController
 @RequestMapping("/api/departments")
 @Api("Department API")
