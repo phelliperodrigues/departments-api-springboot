@@ -15,7 +15,7 @@ import java.io.IOException;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter  implements Filter {
 
-    private String origin = "*";
+    private String origin = "https://departments-front.herokuapp.com";
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
