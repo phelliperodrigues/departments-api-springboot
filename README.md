@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.com/phelliperodrigues/departments-api-springboot.svg?branch=master)](https://travis-ci.com/phelliperodrigues/departments-api-springboot) 
 [![GitHub pull-requests](https://img.shields.io/github/issues-pr/Naereen/StrapDown.js.svg)](https://github.com/phelliperodrigues/departments-api-springboot/pulls)
+[![codecov](https://codecov.io/gh/phelliperodrigues/departments-api-springboot/branch/master/graph/badge.svg)](https://codecov.io/gh/phelliperodrigues/departments-api-springboot)
 
 This is a basic model of an api created with Java 11 and Spring Boot, guided by unit and integration tests
 
