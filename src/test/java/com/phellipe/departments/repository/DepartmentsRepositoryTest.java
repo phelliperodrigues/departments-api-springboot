@@ -1,7 +1,7 @@
-package com.phellipe.departaments.repository;
+package com.phellipe.departments.repository;
 
-import com.phellipe.departaments.model.Department;
-import com.phellipe.departaments.model.enums.BoardDirector;
+import com.phellipe.departments.model.Department;
+import com.phellipe.departments.model.enums.BoardDirector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

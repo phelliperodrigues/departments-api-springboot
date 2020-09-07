@@ -1,15 +1,14 @@
-package com.phellipe.departaments.controller;
+package com.phellipe.departments.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.phellipe.departaments.dto.DepartmentsDTO;
-import com.phellipe.departaments.model.Department;
-import com.phellipe.departaments.model.enums.BoardDirector;
-import com.phellipe.departaments.service.DepartmentsService;
+import com.phellipe.departments.dto.DepartmentsDTO;
+import com.phellipe.departments.model.Department;
+import com.phellipe.departments.model.enums.BoardDirector;
+import com.phellipe.departments.service.DepartmentsService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -25,18 +24,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
 import static java.util.Optional.empty;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.ResultMatcher.matchAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 

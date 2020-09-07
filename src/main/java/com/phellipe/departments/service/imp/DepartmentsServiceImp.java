@@ -1,8 +1,8 @@
-package com.phellipe.departaments.service.imp;
+package com.phellipe.departments.service.imp;
 
-import com.phellipe.departaments.model.Department;
-import com.phellipe.departaments.repository.DepartmentsRepository;
-import com.phellipe.departaments.service.DepartmentsService;
+import com.phellipe.departments.model.Department;
+import com.phellipe.departments.repository.DepartmentsRepository;
+import com.phellipe.departments.service.DepartmentsService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;

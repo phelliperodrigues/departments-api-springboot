@@ -1,4 +1,4 @@
-package com.phellipe.departaments.config;
+package com.phellipe.departments.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

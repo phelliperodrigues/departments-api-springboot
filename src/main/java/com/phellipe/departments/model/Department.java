@@ -1,6 +1,6 @@
-package com.phellipe.departaments.model;
+package com.phellipe.departments.model;
 
-import com.phellipe.departaments.model.enums.BoardDirector;
+import com.phellipe.departments.model.enums.BoardDirector;
 import lombok.*;
 
 import javax.persistence.Entity;

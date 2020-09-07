@@ -1,6 +1,6 @@
-package com.phellipe.departaments.dto;
+package com.phellipe.departments.dto;
 
-import com.phellipe.departaments.model.enums.BoardDirector;
+import com.phellipe.departments.model.enums.BoardDirector;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;

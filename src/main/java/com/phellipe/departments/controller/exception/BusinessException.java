@@ -1,4 +1,4 @@
-package com.phellipe.departaments.controller.exception;
+package com.phellipe.departments.controller.exception;
 
 public class BusinessException extends RuntimeException {
     public BusinessException(String s) {

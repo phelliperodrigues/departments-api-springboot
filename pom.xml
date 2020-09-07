@@ -144,6 +144,15 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>com/phellipe/departments/config/*</exclude>
+                        <exclude>com/phellipe/departments/model/*</exclude>
+                        <exclude>com/phellipe/departments/dto/*</exclude>
+                        <exclude>com/phellipe/departments/model/enums/*</exclude>
+                        <exclude>com/phellipe/departments/controller/exception/*</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>

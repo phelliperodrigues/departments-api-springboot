@@ -1,6 +1,6 @@
-package com.phellipe.departaments.repository;
+package com.phellipe.departments.repository;
 
-import com.phellipe.departaments.model.Department;
+import com.phellipe.departments.model.Department;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

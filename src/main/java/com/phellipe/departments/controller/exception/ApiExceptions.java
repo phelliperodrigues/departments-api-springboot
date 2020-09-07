@@ -1,4 +1,4 @@
-package com.phellipe.departaments.controller.exception;
+package com.phellipe.departments.controller.exception;
 
 import lombok.Getter;
 import org.springframework.validation.BindingResult;

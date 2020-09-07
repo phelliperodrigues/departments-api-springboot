@@ -1,6 +1,6 @@
-package com.phellipe.departaments.service;
+package com.phellipe.departments.service;
 
-import com.phellipe.departaments.model.Department;
+import com.phellipe.departments.model.Department;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

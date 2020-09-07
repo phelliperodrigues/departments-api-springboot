@@ -1,8 +1,8 @@
-package com.phellipe.departaments.controller;
-import com.phellipe.departaments.controller.exception.ApiExceptions;
-import com.phellipe.departaments.dto.DepartmentsDTO;
-import com.phellipe.departaments.model.Department;
-import com.phellipe.departaments.service.DepartmentsService;
+package com.phellipe.departments.controller;
+import com.phellipe.departments.controller.exception.ApiExceptions;
+import com.phellipe.departments.dto.DepartmentsDTO;
+import com.phellipe.departments.model.Department;
+import com.phellipe.departments.service.DepartmentsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;

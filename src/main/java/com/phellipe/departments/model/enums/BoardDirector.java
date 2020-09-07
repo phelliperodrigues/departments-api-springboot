@@ -1,4 +1,4 @@
-package com.phellipe.departaments.model.enums;
+package com.phellipe.departments.model.enums;
 
 import lombok.AllArgsConstructor;
 

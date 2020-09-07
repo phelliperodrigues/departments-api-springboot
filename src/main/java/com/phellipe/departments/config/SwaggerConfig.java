@@ -1,4 +1,4 @@
-package com.phellipe.departaments.config;
+package com.phellipe.departments.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

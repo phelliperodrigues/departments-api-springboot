@@ -1,9 +1,9 @@
-package com.phellipe.departaments.service;
+package com.phellipe.departments.service;
 
-import com.phellipe.departaments.model.Department;
-import com.phellipe.departaments.model.enums.BoardDirector;
-import com.phellipe.departaments.repository.DepartmentsRepository;
-import com.phellipe.departaments.service.imp.DepartmentsServiceImp;
+import com.phellipe.departments.model.Department;
+import com.phellipe.departments.model.enums.BoardDirector;
+import com.phellipe.departments.repository.DepartmentsRepository;
+import com.phellipe.departments.service.imp.DepartmentsServiceImp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
